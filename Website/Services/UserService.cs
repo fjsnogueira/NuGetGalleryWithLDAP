@@ -166,6 +166,11 @@ namespace NuGetGallery
             }
             if (user.PasswordHashAlgorithm.Equals(Constants.LDAPHashAlgorithmId, StringComparison.OrdinalIgnoreCase))
             {
+                //If input email , get userName for LDAP validation
+                if (usernameOrEmail.IndexOf('@')>-1)
+                {
+                    usernameOrEmail = user.Username;
+                }
                 if (ldapService.ValidateUser(usernameOrEmail, password))
                     return user;
                 else
